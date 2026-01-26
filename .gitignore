@@ -1,0 +1,11 @@
+# Virtual Environment
+.venv
+venv
+
+# Vs Code elements
+.vscode
+vscode
+
+# Pytest elements
+.pytest_cache
+__pycache__
