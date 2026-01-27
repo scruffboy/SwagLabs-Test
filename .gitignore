@@ -1,11 +1,20 @@
 # Virtual Environment
-.venv
-venv
+.venv/
+venv/
+ENV/
 
 # Vs Code elements
-.vscode
-vscode
+.vscode/
 
 # Pytest elements
-.pytest_cache
-__pycache__
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Allure results and reports
+allure-results/
+allure-report/
+
+# Playwright
+test-results/
