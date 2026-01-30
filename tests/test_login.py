@@ -3,6 +3,7 @@ import pytest
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
 from utils.config import Config
+from tests.data import AuthData
 
 
 @allure.epic("UI testing SwagLabs")
@@ -14,10 +15,10 @@ class TestLogin:
     @allure.feature("Successful login")
     @pytest.mark.parametrize(
         "user",
-        ["standard_user", "performance_glitch_user"],
+        AuthData.SUCCESSFUL_USERS,
         ids=["Standard_User", "Slow_User"],
     )
-    def test_successful_login(self, page: Page, user):
+    def test_successful_login(self, page: Page, user: str):
         login_page = LoginPage(page)
         login_page.visit(Config.BASE_URL)
         login_page.login(user, "secret_sauce")
@@ -27,14 +28,10 @@ class TestLogin:
     @allure.feature("Negative login")
     @pytest.mark.parametrize(
         "user, password, expected_error",
-        [
-            ("standard_user", "wrong_password", "Username and password do not match"),
-            ("locked_out_user", "secret_sauce", "Sorry, this user has been locked out"),
-            ("", "", "Username is required"),
-        ],
+        AuthData.NEGATIVE_LOGIN_SCENARIOS,
         ids=["Wrong_Password", "Locked_User", "Empty_Fields"],
     )
-    def test_negative_login(self, page: Page, user, password, expected_error):
+    def test_negative_login(self, page: Page, user: str, password: str, expected_error):
         login_page = LoginPage(page)
         login_page.visit(Config.BASE_URL)
         if user or password:
